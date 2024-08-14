@@ -15,12 +15,12 @@ CORS(app, resources={r"/*": {"origins": "*"}},
      allow_headers=['Content-Type', 'Authorization', 'Access-Control-Allow-Credentials'])
 
 # Configuración de MySQL
-app.config['MYSQL_HOST'] = 'localhost'
+app.config['MYSQL_HOST'] = 'bgwwkbp4n8dvovqezvis-mysql.services.clever-cloud.com'
 app.config['MYSQL_PORT'] = 3306
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = ''
-app.config['MYSQL_DB'] = 'nextco'
-app.config['JWT_SECRET_KEY'] = 'your_jwt_secret_key'  # Cambia esto a un secreto seguro
+app.config['MYSQL_USER'] = 'uf6qzpsnyrm9zaak'
+app.config['MYSQL_PASSWORD'] = 'Z5iSxMQdNPFBYW0k40Oy'
+app.config['MYSQL_DB'] = 'bgwwkbp4n8dvovqezvis'
+app.config['JWT_SECRET_KEY'] = 'your_jwt_secret_key'
 
 mysql = MySQL(app)
 
