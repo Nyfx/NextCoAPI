@@ -4,6 +4,7 @@ from flask_mysqldb import MySQL
 import MySQLdb.cursors
 import jwt
 from datetime import datetime, timedelta, timezone
+from jwt.exceptions import ExpiredSignatureError, InvalidTokenError
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'  # Cambia esto a un secreto seguro
@@ -137,9 +138,9 @@ def get_user():
             return jsonify(user)
         else:
             return jsonify({'message': 'Usuario no encontrado'}), 404
-    except jwt.ExpiredSignatureError:
+    except ExpiredSignatureError:
         return jsonify({'message': 'Token expirado'}), 401
-    except jwt.InvalidTokenError:
+    except InvalidTokenError:
         return jsonify({'message': 'Token inválido'}), 401
     except MySQLdb.Error as err:
         return jsonify({'message': f'Error de base de datos: {str(err)}'}), 500
