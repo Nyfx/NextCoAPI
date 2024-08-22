@@ -6,7 +6,7 @@ import jwt
 from datetime import datetime, timedelta, timezone
 from jwt.exceptions import ExpiredSignatureError, InvalidTokenError
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static', static_url_path='')
 app.secret_key = 'your_secret_key'  # Cambia esto a un secreto seguro
 
 # Configuración de CORS para permitir solicitudes desde cualquier origen
@@ -16,12 +16,12 @@ CORS(app, resources={r"/*": {"origins": "*"}},
      allow_headers=['Content-Type', 'Authorization', 'Access-Control-Allow-Credentials'])
 
 # Configuración de MySQL
-app.config['MYSQL_HOST'] = 'bgwwkbp4n8dvovqezvis-mysql.services.clever-cloud.com'
+app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_PORT'] = 3306
-app.config['MYSQL_USER'] = 'uf6qzpsnyrm9zaak'
-app.config['MYSQL_PASSWORD'] = 'Z5iSxMQdNPFBYW0k40Oy'
-app.config['MYSQL_DB'] = 'bgwwkbp4n8dvovqezvis'
-app.config['JWT_SECRET_KEY'] = 'your_jwt_secret_key'
+app.config['MYSQL_USER'] = 'root'
+app.config['MYSQL_PASSWORD'] = ''  # Cambia esto a tu contraseña de MySQL
+app.config['MYSQL_DB'] = 'nextco'
+app.config['JWT_SECRET_KEY'] = 'your_jwt_secret_key'  # Cambia esto a un secreto seguro
 
 mysql = MySQL(app)
 
@@ -138,9 +138,9 @@ def get_user():
             return jsonify(user)
         else:
             return jsonify({'message': 'Usuario no encontrado'}), 404
-    except ExpiredSignatureError:
+    except jwt.ExpiredSignatureError:
         return jsonify({'message': 'Token expirado'}), 401
-    except InvalidTokenError:
+    except jwt.InvalidTokenError:
         return jsonify({'message': 'Token inválido'}), 401
     except MySQLdb.Error as err:
         return jsonify({'message': f'Error de base de datos: {str(err)}'}), 500
@@ -584,3 +584,4 @@ def extend_session():
 
 if __name__ == '__main__':
     app.run()
+
